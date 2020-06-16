@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link, Redirect } from "react-router-dom";
 import "./RegistrationForm.css";
-
+import { useSelector } from "react-redux";
 import { Form, Input, Tooltip, Checkbox, Button } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
-
+import axios from "axios";
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -29,13 +29,36 @@ const tailFormItemLayout = {
 };
 
 const RegistrationForm = () => {
-  const [form] = Form.useForm();
-  const [formData, setFormData] = useState([]);
-  const onFinish = (values) => {
-    setFormData(values);
-  };
-  console.log("data", formData);
+  const isAuth = useSelector(
+    ({ auth_reducer }) => auth_reducer.isAuthenticated
+  );
 
+  const [form] = Form.useForm();
+  const onFinish = (values) => {
+    addUser(values);
+  };
+
+  const addUser = async (data) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      const res = await axios.post(
+        process.env.REACT_APP_BACKEND_URL + "/api/users/signup",
+        data,
+        config
+      );
+      // todo add alert to user
+      console.log(res.data);
+    } catch (error) {
+      console.error(error.response.data);
+    }
+  };
+  if (isAuth) {
+    return <Redirect to="/" />;
+  }
   return (
     <Form
       className="login-form"
@@ -50,10 +73,10 @@ const RegistrationForm = () => {
       scrollToFirstError
     >
       <Form.Item
-        name="nickname"
+        name="name"
         label={
           <span>
-            Nickname&nbsp;
+            Name&nbsp;
             <Tooltip title="What do you want others to call you?">
               <QuestionCircleOutlined />
             </Tooltip>
@@ -62,7 +85,7 @@ const RegistrationForm = () => {
         rules={[
           {
             required: true,
-            message: "Please input your nickname!",
+            message: "Please input your Name!",
             whitespace: true,
           },
         ]}
