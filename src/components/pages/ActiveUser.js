@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import jwt from "jsonwebtoken";
-import {useDispatch }from 'react-redux'
-import {register} from '../../actions/auth_actions'
-
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../../actions/auth_actions";
+import { Redirect } from "react-router-dom";
 
 const ActiveUser = ({ match }) => {
-  const dispatch = useDispatch()
+  const isAuth = useSelector(
+    ({ auth_reducer }) => auth_reducer.isAuthenticated
+  );
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     name: "",
     token: "",
@@ -22,9 +25,12 @@ const ActiveUser = ({ match }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(register(token))
+    dispatch(register(token));
   };
 
+  if (isAuth) {
+    return <Redirect to="/" />;
+  }
   return (
     <div>
       <h1>Hey {name}, Ready to active your account</h1>

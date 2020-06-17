@@ -1,11 +1,13 @@
 import axios from "axios";
-
+import { addAlert } from "../components/utils/Alert";
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   USER_LOADED,
   AUTH_ERROR,
   LOGOUT,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
 } from "./types";
 
 import setAuthToken from "../components/utils/setAuthToken";
@@ -47,18 +49,36 @@ export const register = (token) => async (dispatch) => {
     });
     dispatch(loadUser());
   } catch (error) {
-    const errors = error.response.data.errors;
-    if (errors) {
-      console.error(errors);
-    }
-
+    addAlert("Error", error.response.data.error, "danger");
     dispatch({
       type: REGISTER_FAIL,
-      // no need for payload because in reduser we only remove the token
     });
   }
 };
 
-export const logout = () =>  (dispatch) => {
-  dispatch({type: LOGOUT})
+export const login = (data) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  try {
+    const res = await axios.post("/api/users/signin", data, config);
+
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: res.data, // get the data back
+    });
+    dispatch(loadUser());
+  } catch (error) {
+    addAlert("Error", error.response.data.error, "danger");
+    dispatch({
+      type: LOGIN_FAIL,
+    });
+  }
+};
+
+export const logout = () => (dispatch) => {
+  dispatch({ type: LOGOUT });
 };

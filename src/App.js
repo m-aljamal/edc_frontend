@@ -8,7 +8,8 @@ import ActiveUser from "./components/pages/ActiveUser";
 import setAuthToken from "./components/utils/setAuthToken";
 import { Provider } from "react-redux";
 import store from "./store";
-import {loadUser} from "./actions/auth_actions";
+import { loadUser } from "./actions/auth_actions";
+import LoginForm from "./components/pages/LoginForm";
 
 if (localStorage.token) {
   setAuthToken(localStorage);
@@ -24,6 +25,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={LandingBage} />
           <Route exact path="/signup" component={RegistrationForm} />
+          <Route exact path="/login" component={LoginForm} />
           <Route exact path="/auth/activate/:token" component={ActiveUser} />
         </Switch>
       </Layout>

@@ -4,6 +4,7 @@ import "./RegistrationForm.css";
 import { useSelector } from "react-redux";
 import { Form, Input, Tooltip, Checkbox, Button } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
+import { addAlert } from "../utils/Alert";
 import axios from "axios";
 const formItemLayout = {
   labelCol: {
@@ -50,10 +51,9 @@ const RegistrationForm = () => {
         data,
         config
       );
-      // todo add alert to user
-      console.log(res.data);
+      addAlert("Seccess", res.data.message, "info");
     } catch (error) {
-      console.error(error.response.data);
+      addAlert("Error", error.response.data.error, "danger");
     }
   };
   if (isAuth) {
