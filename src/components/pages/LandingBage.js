@@ -1,18 +1,12 @@
-import React from 'react'
-import {useSelector} from 'react-redux'
+import React from "react";
+import edcImage from "../images/edc.JPG";
 const LandingBage = () => {
-    const state = useSelector(state => {
-        console.log(state.auth_reducer.user);
-        
-    })
+  return (
+    <div style={{ textAlign: "center" }}>
+      <h1>EDC home page</h1>
+      <img src={edcImage} alt="logo" style={{ width: "700px" }} />
+    </div>
+  );
+};
 
-    console.log(state);
-    
-    return (
-        <div>
-            Landing Page
-        </div>
-    )
-}
-
-export default LandingBage
+export default LandingBage;

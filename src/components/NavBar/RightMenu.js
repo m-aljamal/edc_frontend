@@ -9,7 +9,7 @@ function RightMenu(props) {
   const isAuth = useSelector(
     ({ auth_reducer }) => auth_reducer.isAuthenticated
   );
-  console.log(props);
+  
 
   const dispatch = useDispatch();
   const handleLogout = () => {

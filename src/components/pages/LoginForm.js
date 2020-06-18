@@ -11,7 +11,6 @@ const LoginForm = () => {
   );
   const dispatch = useDispatch();
   const onFinish = (values) => {
-    console.log("Received values of form: ", values);
     dispatch(login(values));
   };
   if (isAuth) {

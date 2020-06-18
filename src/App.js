@@ -10,10 +10,13 @@ import { Provider } from "react-redux";
 import store from "./store";
 import { loadUser } from "./actions/auth_actions";
 import LoginForm from "./components/pages/LoginForm";
+import Campaigns from "./components/pages/campaigns/Campaigns";
+import Campaign from "./components/pages/campaigns/Campaign";
 
 if (localStorage.token) {
   setAuthToken(localStorage);
 }
+
 function App() {
   useEffect(() => {
     store.dispatch(loadUser());
@@ -26,6 +29,8 @@ function App() {
           <Route exact path="/" component={LandingBage} />
           <Route exact path="/signup" component={RegistrationForm} />
           <Route exact path="/login" component={LoginForm} />
+          <Route exact path="/campaigns" component={Campaigns} />
+          <Route exact path="/campaigns/:id" component={Campaign} />
           <Route exact path="/auth/activate/:token" component={ActiveUser} />
         </Switch>
       </Layout>
