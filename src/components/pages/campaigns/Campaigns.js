@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {useSelector}from 'react-redux'
+import StripeButton from "../../StripeButton";
 
 const Campaigns = () => {
   const campaignsState = useSelector(({campaigns_reducer}) => campaigns_reducer)
@@ -41,7 +42,7 @@ const Campaigns = () => {
                 <span style={{ display: "block" }}>Amount {value.amount} $</span>
                 <span>Left {value.left} $</span>
               </div>
-              <button>Donate</button>
+              <StripeButton price='50'/>
             </div>
           </div>
         ))}
